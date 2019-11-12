@@ -1,0 +1,35 @@
+{
+  "name": "node-api-places",
+  "version": "1.0.0",
+  "description": "Api sencilla para crear tu app y publicar lugares, comentarios, registrar usuarios, etc.",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "npx nodemon app/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milang90/node-api-places.git"
+  },
+  "keywords": [
+    "Node",
+    "Mysql",
+    "Express",
+    "API",
+    "Places"
+  ],
+  "author": "Milan Gotera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/milang90/node-api-places/issues"
+  },
+  "homepage": "https://github.com/milang90/node-api-places#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}
