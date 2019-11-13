@@ -33,7 +33,7 @@ const PlacesController = {
             if(result.length){
                 return res.status(200).send({
                     status: 200,
-                    data: result,
+                    data: result[0],
                 });
             }
             return res.status(404).send({

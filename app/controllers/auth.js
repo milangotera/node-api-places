@@ -1,6 +1,7 @@
 'use strict';
 
-var AppModel = require('../models/AppModel');
+const AppModel = require('../models/AppModel');
+const authMiddleware = require('../middlewares/auth');
 
 const AuthController = {
     
@@ -118,7 +119,7 @@ const AuthController = {
                 };
                 return res.status(200).send({
                     status: 200,
-                    data: userData,
+                    token: authMiddleware.setToken(result[0]),
                     message: 'Se ha logueado exitosamente',
                 });
             }else{
@@ -127,6 +128,28 @@ const AuthController = {
                     message: 'Credenciales incorrectas',
                 });
             }
+        });
+    },
+
+    profile: function(req, res) {
+        const user_id = req.token.user_id;
+        AppModel.select('user', { user_id : user_id }, function(error, result) {
+            if(error){
+                return res.status(500).send({
+                    status: 500,
+                    message: 'Error interno del servidor',
+                });
+            }
+            if(result.length){
+                return res.status(200).send({
+                    status: 200,
+                    data: result[0],
+                });
+            }
+            return res.status(404).send({
+                status: 404,
+                message: "No existen los datos que buscas",
+            });
         });
     },
 
