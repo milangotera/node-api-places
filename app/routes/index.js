@@ -3,11 +3,9 @@
 var router = require('express').Router();
 var auth = require('./auth');
 var places = require('./places');
+var doc = require('./doc');
 
-router.get('/', function (req, res) {
-    res.status(200).send('Estás conectado a nuestra API');
-});
-
+router.use('/', doc);
 router.use('/auth', auth);
 router.use('/places', places);
 
