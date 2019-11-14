@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 13-11-2019 a las 15:35:20
+-- Tiempo de generación: 14-11-2019 a las 20:59:39
 -- Versión del servidor: 5.7.24
 -- Versión de PHP: 7.2.19
 
@@ -36,14 +36,6 @@ CREATE TABLE `category` (
   `category_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Volcado de datos para la tabla `category`
---
-
-INSERT INTO `category` (`category_id`, `category_name`, `category_display`, `category_created_at`, `category_updated_at`) VALUES
-(1, 'Hotel', 1, '2019-11-12 22:09:12', '2019-11-12 22:09:12'),
-(2, 'Farmacia', 1, '2019-11-12 22:09:12', '2019-11-12 22:09:12');
-
 -- --------------------------------------------------------
 
 --
@@ -53,21 +45,13 @@ INSERT INTO `category` (`category_id`, `category_name`, `category_display`, `cat
 CREATE TABLE `comment` (
   `comment_id` int(11) NOT NULL,
   `comment_content` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `comment_visited` int(11) NOT NULL,
-  `comment_return` int(11) NOT NULL,
+  `comment_vote` int(11) NOT NULL,
   `comment_display` int(11) NOT NULL,
   `comment_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comment_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `place_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `comment`
---
-
-INSERT INTO `comment` (`comment_id`, `comment_content`, `comment_visited`, `comment_return`, `comment_display`, `comment_created_at`, `comment_updated_at`, `place_id`, `user_id`) VALUES
-(1, 'Me gusta mucho porque es bastante económico', 1, 1, 1, '2019-11-12 22:28:00', '2019-11-12 22:28:00', 1, 7);
 
 -- --------------------------------------------------------
 
@@ -85,17 +69,10 @@ CREATE TABLE `place` (
   `place_display` int(11) NOT NULL,
   `place_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `place_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `id_user` int(11) NOT NULL,
-  `id_zone` int(11) NOT NULL,
-  `id_category` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `zone_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `place`
---
-
-INSERT INTO `place` (`place_id`, `place_name`, `place_description`, `place_address`, `place_location`, `place_image`, `place_display`, `place_created_at`, `place_updated_at`, `id_user`, `id_zone`, `id_category`) VALUES
-(1, 'Inkafarma', 'Farmacia donde venden a bueno precios', 'Frente al Mercdo Bolognessi', '0,0', '', 1, '2019-11-12 22:15:41', '2019-11-12 22:15:41', 7, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -117,13 +94,6 @@ CREATE TABLE `user` (
   `user_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Volcado de datos para la tabla `user`
---
-
-INSERT INTO `user` (`user_id`, `user_firstname`, `user_lastname`, `user_email`, `user_password`, `user_avatar`, `user_premium`, `user_status`, `user_token`, `user_created_at`, `user_updated_at`) VALUES
-(7, 'Milan', 'Gotera', 'milangotera@gmail.com', 'roko2090', NULL, 0, 0, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3LCJ1c2VyX2ZpcnN0bmFtZSI6Ik1pbGFuIiwidXNlcl9sYXN0bmFtZSI6IkdvdGVyYSIsInVzZXJfZW1haWwiOiJtaWxhbmdvdGVyYUBnbWFpbC5jb20iLCJ1c2VyX2F2YXRhciI6bnVsbCwidXNlcl9wcmVtaXVtIjowLCJ1c2VyX3N0YXR1cyI6MCwiaWF0IjoxNTczNjU4OTg3LCJleHAiOjE1NzM3NDUzODd9.sF8IE_a_bmbpNh8fb_DZF5kwOYkEghCJAFnjjKx56GY', '2019-11-12 21:00:34', '2019-11-13 10:29:47');
-
 -- --------------------------------------------------------
 
 --
@@ -140,13 +110,6 @@ CREATE TABLE `zone` (
   `zone_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `zone_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `zone`
---
-
-INSERT INTO `zone` (`zone_id`, `zone_name`, `zone_postcode`, `zone_location`, `zone_type`, `zone_parent`, `zone_created_at`, `zone_updated_at`) VALUES
-(1, 'Tacna', 23000, NULL, 3, NULL, '2019-11-12 22:12:51', '2019-11-12 22:12:51');
 
 --
 -- Índices para tablas volcadas
@@ -175,9 +138,9 @@ ALTER TABLE `comment`
 ALTER TABLE `place`
   ADD PRIMARY KEY (`place_id`),
   ADD UNIQUE KEY `place_id_UNIQUE` (`place_id`),
-  ADD KEY `fk_place_user` (`id_user`),
-  ADD KEY `fk_place_zone` (`id_zone`),
-  ADD KEY `fk_place_category` (`id_category`);
+  ADD KEY `fk_place_user` (`user_id`),
+  ADD KEY `fk_place_zone` (`zone_id`),
+  ADD KEY `fk_place_category` (`category_id`);
 
 --
 -- Indices de la tabla `user`
@@ -202,31 +165,31 @@ ALTER TABLE `zone`
 -- AUTO_INCREMENT de la tabla `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `place`
 --
 ALTER TABLE `place`
-  MODIFY `place_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `place_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `zone`
 --
 ALTER TABLE `zone`
-  MODIFY `zone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `zone_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -243,9 +206,9 @@ ALTER TABLE `comment`
 -- Filtros para la tabla `place`
 --
 ALTER TABLE `place`
-  ADD CONSTRAINT `fk_place_category` FOREIGN KEY (`id_category`) REFERENCES `category` (`category_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_place_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_place_zone` FOREIGN KEY (`id_zone`) REFERENCES `zone` (`zone_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_place_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_place_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_place_zone` FOREIGN KEY (`zone_id`) REFERENCES `zone` (`zone_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
