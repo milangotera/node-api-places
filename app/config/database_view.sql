@@ -1,0 +1,47 @@
+/*
+    VISTAR PARA LISTAR INFORMACION MAS COMPLETA
+*/
+
+/* PARA LISTAR LAS PLAZAS CON SUS DEMAS DATOS */
+CREATE OR REPLACE VIEW view_places_list AS
+SELECT 
+	P.place_id,
+    P.place_name,
+    P.place_description,
+    P.place_location,
+    P.place_image,
+    DATE_FORMAT(P.place_created_at,'%d/%m/%Y %H:%i:%s') AS place_created_at,
+    P.category_id,
+    P.place_display,
+    C.category_name,
+    P.user_id,
+    U.user_firstname,
+    U.user_lastname,
+    U.user_avatar,
+    P.zone_id,
+    Z.zone_name
+FROM
+	place P
+LEFT JOIN category C ON P.category_id = C.category_id
+LEFT JOIN user U ON P.user_id = U.user_id
+LEFT JOIN zone Z ON P.zone_id = P.zone_id
+;
+
+/* PARA LISTAR LOS COMENTARIOS CON SUS DEMAS DATOS */
+CREATE OR REPLACE VIEW view_comments_list AS
+SELECT 
+	C.comment_id,
+    C.comment_content,
+    C.comment_vote,
+    C.comment_display,
+    DATE_FORMAT(C.comment_created_at,'%d/%m/%Y %H:%i:%s') AS comment_created_at,
+    C.place_id,
+    C.user_id,
+    U.user_firstname,
+    U.user_lastname,
+    U.user_avatar
+FROM
+	comment C
+LEFT JOIN place P ON C.place_id = P.place_id
+LEFT JOIN user U ON C.user_id = U.user_id
+;

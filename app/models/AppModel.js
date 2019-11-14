@@ -11,7 +11,7 @@ const AppModel = {
             cols.push(prop);
             values.push(`'${data[prop]}'`);
         }
-        let sql = `INSERT INTO user (${cols}) VALUES (${values})`;
+        let sql = `INSERT INTO ${table} (${cols}) VALUES (${values})`;
         Mysql.query(sql, data, function( error, result){
             callback(error, result);
         });
