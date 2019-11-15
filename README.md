@@ -34,7 +34,7 @@ Ya con esto es todo y tienes ejecuntando el proyecto en tu servidor http://local
 
 las Api's disponibles puedes ver la docuemtación en http://node-api-places.w3ya.com
 
-![alt tag](https://raw.githubusercontent.com/milang90/node-api-places/master/swagger.png)
+![alt tag](https://raw.githubusercontent.com/milang90/node-api-places/master/api-doc.png)
 
 ### Finalmente
 
