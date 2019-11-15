@@ -54,6 +54,7 @@ const AuthController = {
                     user_lastname: req.body.user_lastname,
                     user_email: req.body.user_email,
                     user_password: req.body.user_password,
+                    user_avatar: 'avatar/0.png',
                     user_premium: 0,
                     user_status: 0,
                 };

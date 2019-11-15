@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 14-11-2019 a las 20:59:39
+-- Tiempo de generación: 15-11-2019 a las 19:30:34
 -- Versión del servidor: 5.7.24
 -- Versión de PHP: 7.2.19
 
@@ -31,10 +31,32 @@ SET time_zone = "+00:00";
 CREATE TABLE `category` (
   `category_id` int(11) NOT NULL,
   `category_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `category_icon` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `category_display` int(11) NOT NULL,
   `category_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `category_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `category`
+--
+
+INSERT INTO `category` (`category_id`, `category_name`, `category_icon`, `category_display`, `category_created_at`, `category_updated_at`) VALUES
+(1, 'HOTELES', 'category/1.png', 1, '2019-11-12 22:09:12', '2019-11-15 14:08:39'),
+(2, 'FARMACIAS', 'category/2.png', 1, '2019-11-12 22:09:12', '2019-11-15 14:08:45'),
+(3, 'HOSPITALES', 'category/3.png', 1, '2019-11-14 16:01:33', '2019-11-15 14:08:50'),
+(4, 'SUPER MERCADO', 'category/4.png', 1, '2019-11-14 16:01:33', '2019-11-15 14:08:56'),
+(5, 'PARQUES', 'category/5.png', 1, '2019-11-14 16:02:07', '2019-11-15 14:09:01'),
+(6, 'CANCHAS', 'category/6.png', 1, '2019-11-14 16:02:07', '2019-11-15 14:09:05'),
+(7, 'PISCINAS', 'category/7.png', 1, '2019-11-14 16:02:33', '2019-11-15 14:09:11'),
+(8, 'PLAZAS', 'category/8.png', 1, '2019-11-14 16:02:33', '2019-11-15 14:09:16'),
+(9, 'RESTAURANTES', 'category/9.png', 1, '2019-11-14 16:13:22', '2019-11-15 14:09:22'),
+(10, 'BARES', 'category/10.png', 1, '2019-11-14 16:13:33', '2019-11-15 14:09:28'),
+(11, 'GRIFOS', 'category/11.png', 1, '2019-11-14 16:14:03', '2019-11-15 14:09:37'),
+(12, 'ESTACIONAMIENTOS', 'category/12.png', 1, '2019-11-14 16:14:31', '2019-11-15 14:09:43'),
+(13, 'DISCOTECAS', 'category/13.png', 1, '2019-11-14 16:15:25', '2019-11-15 14:09:47'),
+(14, 'CENTROS COMERCIALES', 'category/14.png', 1, '2019-11-14 16:15:56', '2019-11-15 14:09:52'),
+(15, 'IGLESIAS', 'category/15.png', 1, '2019-11-14 16:16:32', '2019-11-15 14:09:57');
 
 -- --------------------------------------------------------
 
@@ -52,6 +74,15 @@ CREATE TABLE `comment` (
   `place_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `comment`
+--
+
+INSERT INTO `comment` (`comment_id`, `comment_content`, `comment_vote`, `comment_display`, `comment_created_at`, `comment_updated_at`, `place_id`, `user_id`) VALUES
+(1, 'Me gusta mucho porque es bastante económico', 1, 1, '2019-11-12 22:28:00', '2019-11-14 13:26:48', 1, 7),
+(2, 'El campo comentario es requerido', 0, 1, '2019-11-14 13:13:51', '2019-11-14 13:13:51', 1, 7),
+(3, 'El campo comentario es requerido', 1, 1, '2019-11-14 13:29:12', '2019-11-14 13:29:12', 1, 7);
 
 -- --------------------------------------------------------
 
@@ -74,6 +105,13 @@ CREATE TABLE `place` (
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `place`
+--
+
+INSERT INTO `place` (`place_id`, `place_name`, `place_description`, `place_address`, `place_location`, `place_image`, `place_display`, `place_created_at`, `place_updated_at`, `user_id`, `zone_id`, `category_id`) VALUES
+(1, 'Inkafarma', 'Farmacia donde venden a bueno precios', 'Frente al Mercdo Bolognessi', '0,0', 'place/0.png', 1, '2019-11-12 22:15:41', '2019-11-15 14:24:13', 7, 1, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -94,6 +132,13 @@ CREATE TABLE `user` (
   `user_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `user`
+--
+
+INSERT INTO `user` (`user_id`, `user_firstname`, `user_lastname`, `user_email`, `user_password`, `user_avatar`, `user_premium`, `user_status`, `user_token`, `user_created_at`, `user_updated_at`) VALUES
+(7, 'Thiago', 'Gotera', 'milangotera@gmail.com', 'roko2090', 'avatar/0.png', 0, 0, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3LCJ1c2VyX2ZpcnN0bmFtZSI6Ik1pbGFuIiwidXNlcl9sYXN0bmFtZSI6IkdvdGVyYSIsInVzZXJfZW1haWwiOiJtaWxhbmdvdGVyYUBnbWFpbC5jb20iLCJ1c2VyX2F2YXRhciI6bnVsbCwidXNlcl9wcmVtaXVtIjowLCJ1c2VyX3N0YXR1cyI6MCwiaWF0IjoxNTczODM3NjcwLCJleHAiOjE1NzM5MjQwNzB9.ExsLGdTD_s4aa1UQQPpAbbiJ98b_GjGwnul0R-ua3tE', '2019-11-12 21:00:34', '2019-11-15 14:18:06');
+
 -- --------------------------------------------------------
 
 --
@@ -110,6 +155,16 @@ CREATE TABLE `zone` (
   `zone_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `zone_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `zone`
+--
+
+INSERT INTO `zone` (`zone_id`, `zone_name`, `zone_postcode`, `zone_location`, `zone_type`, `zone_parent`, `zone_created_at`, `zone_updated_at`) VALUES
+(1, 'Tacna', 23000, NULL, 1, NULL, '2019-11-12 22:12:51', '2019-11-15 11:09:08'),
+(2, 'Jorge Basadre', 23000, '0,0', 1, NULL, '2019-11-15 11:59:15', '2019-11-15 11:59:15'),
+(3, 'Candarave', 23000, '0,0', 1, NULL, '2019-11-15 11:59:15', '2019-11-15 11:59:15'),
+(4, 'Tarata', 23000, '0,0', 1, NULL, '2019-11-15 11:59:15', '2019-11-15 11:59:15');
 
 --
 -- Índices para tablas volcadas
@@ -165,31 +220,31 @@ ALTER TABLE `zone`
 -- AUTO_INCREMENT de la tabla `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `place`
 --
 ALTER TABLE `place`
-  MODIFY `place_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `place_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `zone`
 --
 ALTER TABLE `zone`
-  MODIFY `zone_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `zone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
