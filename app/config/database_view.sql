@@ -69,3 +69,15 @@ SELECT
 FROM
 	zone Z
 ;
+
+/* PARA LISTAR LOS PERFILES DE USUARIO */
+CREATE OR REPLACE VIEW view_users_profile_list AS
+SELECT 
+	U.user_id,
+    U.user_firstname,
+    U.user_lastname,
+    U.user_email,
+    U.user_avatar
+FROM
+	user U
+;

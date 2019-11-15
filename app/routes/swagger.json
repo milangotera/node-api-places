@@ -29,6 +29,16 @@
       "description": "Endpoints para listar provincias"
     }
   ],
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
   "paths": {
     "/places": {
       "get": {
@@ -125,6 +135,11 @@
       "post": {
         "tags": [
           "Places"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
         ],
         "summary": "Crear comentarios de una plaza",
         "description": "",
@@ -406,6 +421,11 @@
       "get": {
         "tags": [
           "Auth"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
         ],
         "summary": "Mostrar Perfil",
         "description": "",

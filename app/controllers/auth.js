@@ -133,7 +133,7 @@ const AuthController = {
 
     profile: function(req, res) {
         const user_id = req.token.user_id;
-        AppModel.select('user', { user_id : user_id }, function(error, result) {
+        AppModel.select('view_users_profile_list', { user_id : user_id }, function(error, result) {
             if(error){
                 return res.status(500).send({
                     status: 500,
