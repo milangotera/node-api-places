@@ -492,6 +492,53 @@
           "401": {
             "description": "No tienes acceso a la información"
           },
+          "403": {
+            "description": "Error en envio de datos"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Cargar imagen de perfil",
+        "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "user_avatar",
+            "type": "file",
+            "required": true,
+            "description": "Imagen del usuario"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Se cargaron los datos exitosamente"
+          },
+          "401": {
+            "description": "No tienes acceso a la información"
+          },
+          "403": {
+            "description": "Error en envio de datos"
+          },
           "404": {
             "description": "No existen los datos que buscas"
           },

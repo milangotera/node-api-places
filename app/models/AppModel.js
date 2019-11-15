@@ -65,7 +65,6 @@ const AppModel = {
         }
         
         let sql = `UPDATE ${table} SET ${sql_set} ${sql_where}`;
-        console.log(sql);
         
         Mysql.query(sql, function( error, result){
             callback(error, result);

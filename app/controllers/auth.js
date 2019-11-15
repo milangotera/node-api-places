@@ -2,6 +2,7 @@
 
 const AppModel = require('../models/AppModel');
 const authMiddleware = require('../middlewares/auth');
+const fs = require('fs');
 
 const AuthController = {
     
@@ -202,38 +203,57 @@ const AuthController = {
 
     upload: function(req, res) {
         
-        let errors = 0;
-        let errorData = {};
+        const user_id = req.token.user_id;
+        const user_avatar = req.files.user_avatar;
+        const target_path = `./public/avatar/${user_id}.png`;
 
-        if(errors){
+        if(!user_avatar){
             return res.status(403).send({
                 status:403,
-                errors: errorData,
-                message: 'Error en envío de datos',
+                message: 'La imagen es requerido',
             });
+        }else{
+            if(user_avatar.type != 'image/jpeg' && user_avatar.type != 'image/png'){
+                return res.status(403).send({
+                    status:403,
+                    message: 'La imagen solo admite jpeg/png',
+                });
+            }
+            if(user_avatar.size > 60000){
+                return res.status(403).send({
+                    status:403,
+                    message: 'La imagen excede el limite permitido',
+                });
+            }
+
+            fs.rename(user_avatar.path, target_path, function(err) {
+                if (err) throw err;
+                fs.unlink(user_avatar.path, function() {
+                    if(err){
+                        return res.status(500).send({
+                            status: 500,
+                            message: 'No se pudo cargar la imagen',
+                        });
+                    }
+                });
+            });
+
+            AppModel.update('user', { user_avatar: `avatar/${user_id}.png` }, { user_id: user_id }, function(error, result) {
+                if(error){
+                    return res.status(500).send({
+                        status: 500,
+                        message: 'Error interno del servidor',
+                    });
+                }
+                if(result){
+                    return res.status(201).send({
+                        status: 201,
+                        message: 'Se ha cargado la imagen exitosamente',
+                    });
+                }
+            });
+
         }
-
-        const user_id = req.token.user_id;
-        
-        const userData = {
-            user_firstname: req.body.user_firstname,
-            user_lastname: req.body.user_lastname,
-        };
-
-        AppModel.update('user', userData, { user_id: user_id }, function(error, result) {
-            if(error){
-                return res.status(500).send({
-                    status: 500,
-                    message: 'Error interno del servidor',
-                });
-            }
-            if(result){
-                return res.status(201).send({
-                    status: 200,
-                    message: 'Se ha actualizado exitosamente',
-                });
-            }
-        });
 
     },
 

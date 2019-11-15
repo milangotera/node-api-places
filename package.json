@@ -1,36 +1,552 @@
 {
-  "name": "node-api-places",
-  "version": "1.0.0",
-  "description": "Api sencilla para crear tu app y publicar lugares, comentarios, registrar usuarios, etc.",
-  "main": "app/index.js",
-  "scripts": {
-    "test": "npx nodemon app/index.js"
+  "swagger": "2.0",
+  "info": {
+    "description": "Docuemntación del api places node + express",
+    "version": "1.0.0",
+    "title": "node-api-places",
+    "contact": {
+      "name": "Milan Gotera",
+      "email": "milangotera@gmail.com",
+      "url": "https://w3ya.com/me"
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/milang90/node-api-places.git"
-  },
-  "keywords": [
-    "Node",
-    "Mysql",
-    "Express",
-    "API",
-    "Places"
+  "host": "node-api-places.w3ya.com",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Endpoints para autenticación"
+    },
+    {
+      "name": "Places",
+      "description": "Endpoints para plazas"
+    },
+    {
+      "name": "Categorys",
+      "description": "Endpoints para listar categorias"
+    },
+    {
+      "name": "Zones",
+      "description": "Endpoints para listar provincias"
+    }
   ],
-  "author": "Milan Gotera",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/milang90/node-api-places/issues"
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
   },
-  "homepage": "https://github.com/milang90/node-api-places#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mysql": "^2.17.1",
-    "swagger-ui-express": "^4.1.2"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.4"
+  "paths": {
+    "/places": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "summary": "Listar las plazas publicadas",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/places/{id}": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "summary": "Mostrar detalle de una plaza",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de la plaza",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/places/{id}/comments": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "summary": "Mostrar comentarios de una plaza",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de la plaza",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Places"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Crear comentarios de una plaza",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de la plaza",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "description": "Datos del comentario",
+            "schema": {
+              "type": "object",
+              "required": [
+                "comment_content",
+                "comment_vote"
+              ],
+              "properties": {
+                "comment_content": {
+                  "type": "string"
+                },
+                "comment_vote": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "401": {
+            "description": "No tienes acceso a la información"
+          },
+          "403": {
+            "description": "Error en envío de datos"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/categorys": {
+      "get": {
+        "tags": [
+          "Categorys"
+        ],
+        "summary": "Listar las categorias publicadas",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/categorys/{id}/places": {
+      "get": {
+        "tags": [
+          "Categorys"
+        ],
+        "summary": "Mostrar plazas de una categoria",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de la categoria",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/zones": {
+      "get": {
+        "tags": [
+          "Zones"
+        ],
+        "summary": "Listar las provincias publicadas",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/zones/{id}/places": {
+      "get": {
+        "tags": [
+          "Zones"
+        ],
+        "summary": "Mostrar plazas de una provincia",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de la categoria",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Iniciar sesión",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Credenciales del usuario",
+            "schema": {
+              "type": "object",
+              "required": [
+                "user_email",
+                "user_password"
+              ],
+              "properties": {
+                "user_email": {
+                  "type": "string"
+                },
+                "user_password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Se ha creado la sesión exitosaente"
+          },
+          "403": {
+            "description": "Error en envío de datos"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Registrarse",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Credenciales del usuario",
+            "schema": {
+              "type": "object",
+              "required": [
+                "user_email",
+                "user_password",
+                "user_firstname",
+                "user_lastname"
+              ],
+              "properties": {
+                "user_email": {
+                  "type": "string"
+                },
+                "user_password": {
+                  "type": "string"
+                },
+                "user_firstname": {
+                  "type": "string"
+                },
+                "user_lastname": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Se ha registrado exitosamente"
+          },
+          "403": {
+            "description": "Error en envío de datos"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Mostrar Perfil",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Se cargaron los datos exitosamente"
+          },
+          "401": {
+            "description": "No tienes acceso a la información"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Actualizar Perfil",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Datos del usuario",
+            "schema": {
+              "type": "object",
+              "required": [
+                "user_firstname",
+                "user_lastname"
+              ],
+              "properties": {
+                "user_firstname": {
+                  "type": "string"
+                },
+                "user_lastname": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Se cargaron los datos exitosamente"
+          },
+          "401": {
+            "description": "No tienes acceso a la información"
+          },
+          "403": {
+            "description": "Error en envio de datos"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Cargar imagen de perfil",
+        "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "user_avatar",
+            "type": "file",
+            "required": true,
+            "description": "Imagen del usuario"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Se cargaron los datos exitosamente"
+          },
+          "401": {
+            "description": "No tienes acceso a la información"
+          },
+          "403": {
+            "description": "Error en envio de datos"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    }
   }
 }
