@@ -34,6 +34,8 @@ Ya con esto es todo y tienes ejecuntando el proyecto en tu servidor http://local
 
 las Api's disponibles puedes ver la docuemtación en http://node-api-places.w3ya.com
 
+![alt tag](https://raw.githubusercontent.com/milang90/node-api-places/master/swagger.png)
+
 ### Finalmente
 
 Recuerda tener instalado y configurado tu servidor de Mysql e importar los datos para que pueda andar correctamente el proyecto 
