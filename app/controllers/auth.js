@@ -200,6 +200,43 @@ const AuthController = {
 
     },
 
+    upload: function(req, res) {
+        
+        let errors = 0;
+        let errorData = {};
+
+        if(errors){
+            return res.status(403).send({
+                status:403,
+                errors: errorData,
+                message: 'Error en envío de datos',
+            });
+        }
+
+        const user_id = req.token.user_id;
+        
+        const userData = {
+            user_firstname: req.body.user_firstname,
+            user_lastname: req.body.user_lastname,
+        };
+
+        AppModel.update('user', userData, { user_id: user_id }, function(error, result) {
+            if(error){
+                return res.status(500).send({
+                    status: 500,
+                    message: 'Error interno del servidor',
+                });
+            }
+            if(result){
+                return res.status(201).send({
+                    status: 200,
+                    message: 'Se ha actualizado exitosamente',
+                });
+            }
+        });
+
+    },
+
 };
 
 module.exports = AuthController;

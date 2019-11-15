@@ -16,8 +16,12 @@ router.get('/profile', authMiddleware.getToken, function(req, res) {
     AuthController.profile(req, res);
 });
 
-router.post('/profile', authMiddleware.getToken, function(req, res) {
+router.put('/profile', authMiddleware.getToken, function(req, res) {
     AuthController.update(req, res);
+});
+
+router.post('/profile', authMiddleware.getToken, function(req, res) {
+    AuthController.upload(req, res);
 });
 
 module.exports = router;
