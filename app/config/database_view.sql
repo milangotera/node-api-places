@@ -45,3 +45,16 @@ FROM
 LEFT JOIN place P ON C.place_id = P.place_id
 LEFT JOIN user U ON C.user_id = U.user_id
 ;
+
+
+/* PARA LISTAR LAS CATEGORIAS CON SUS DEMAS DATOS */
+CREATE OR REPLACE VIEW view_categorys_list AS
+SELECT 
+	C.category_id,
+    C.category_name,
+    C.category_icon,
+    C.category_display,
+    (SELECT COUNT(0) FROM place P WHERE P.category_id=C.category_id) AS category_places
+FROM
+	category C
+;

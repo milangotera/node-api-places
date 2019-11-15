@@ -13,12 +13,16 @@
   "host": "node-api-places.w3ya.com",
   "tags": [
     {
+      "name": "Auth",
+      "description": "Endpoints para autenticación"
+    },
+    {
       "name": "Places",
       "description": "Endpoints para plazas"
     },
     {
-      "name": "Auth",
-      "description": "Endpoints para autenticación"
+      "name": "Categorys",
+      "description": "Endpoints para listar categorias"
     }
   ],
   "paths": {
@@ -164,6 +168,64 @@
           },
           "403": {
             "description": "Error en envío de datos"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/categorys": {
+      "get": {
+        "tags": [
+          "Categorys"
+        ],
+        "summary": "Listar las categorias publicadas",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/categorys/{id}/places": {
+      "get": {
+        "tags": [
+          "Categorys"
+        ],
+        "summary": "Mostrar plazas de una categoria",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de la categoria",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
           },
           "404": {
             "description": "No existen los datos que buscas"
