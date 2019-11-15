@@ -58,3 +58,14 @@ SELECT
 FROM
 	category C
 ;
+
+
+/* PARA LISTAR LAS ZONAS CON SUS DEMAS DATOS */
+CREATE OR REPLACE VIEW view_zones_list AS
+SELECT 
+	Z.zone_id,
+    Z.zone_name,
+    (SELECT COUNT(0) FROM place P WHERE P.zone_id=Z.zone_id) AS zone_places
+FROM
+	zone Z
+;

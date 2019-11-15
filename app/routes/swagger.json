@@ -23,6 +23,10 @@
     {
       "name": "Categorys",
       "description": "Endpoints para listar categorias"
+    },
+    {
+      "name": "Zones",
+      "description": "Endpoints para listar provincias"
     }
   ],
   "paths": {
@@ -207,6 +211,64 @@
           "Categorys"
         ],
         "summary": "Mostrar plazas de una categoria",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de la categoria",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/zones": {
+      "get": {
+        "tags": [
+          "Zones"
+        ],
+        "summary": "Listar las provincias publicadas",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/zones/{id}/places": {
+      "get": {
+        "tags": [
+          "Zones"
+        ],
+        "summary": "Mostrar plazas de una provincia",
         "description": "",
         "consumes": [
           "application/json"
