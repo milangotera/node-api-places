@@ -39,6 +39,15 @@ const authMiddleware = {
             }
         });
     },
+    getTokenAdmin: function(req, res, next) {
+        if(req.token.user_role != 1) {
+            return res.status(401).send({
+                status: 401,
+                message: "Sin permiso para consultar",
+            });
+        }
+        next();
+    },
     setToken: function(user) {
         const data = {
             user_id: user.user_id,
@@ -46,6 +55,7 @@ const authMiddleware = {
             user_lastname: user.user_lastname,
             user_email: user.user_email,
             user_avatar: user.user_avatar,
+            user_role: user.user_role,
             user_premium: user.user_premium,
             user_status: user.user_status,
         };

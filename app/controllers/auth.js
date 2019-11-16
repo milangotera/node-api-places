@@ -57,6 +57,7 @@ const AuthController = {
                     user_password: req.body.user_password,
                     user_avatar: 'avatar/0.png',
                     user_premium: 0,
+                    user_role: 0,
                     user_status: 0,
                 };
                 AppModel.insert('user', userData, function(error, result) {
