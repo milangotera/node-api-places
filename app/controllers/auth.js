@@ -258,6 +258,58 @@ const AuthController = {
 
     },
 
+    addPremium: function(req, res) {
+        
+        let user_id = req.params.id;
+
+        if(!user_id){
+            return res.status(403).send({
+                status:403,
+                errors: errorData,
+                message: 'Error en envío de datos',
+            });
+        }
+
+        AppModel.update('user', { user_premium: 1 }, { user_id: user_id }, function(error, result) {
+            if(error){
+                return res.status(500).send({
+                    status: 500,
+                    message: 'Error interno del servidor',
+                });
+            }
+            return res.status(200).send({
+                status: 200,
+                message: 'Se ha actualizado exitosamente',
+            });
+        });
+    },
+
+    removePremium: function(req, res) {
+        
+        let user_id = req.params.id;
+
+        if(!user_id){
+            return res.status(403).send({
+                status:403,
+                errors: errorData,
+                message: 'Error en envío de datos',
+            });
+        }
+
+        AppModel.update('user', { user_premium: 0 }, { user_id: user_id }, function(error, result) {
+            if(error){
+                return res.status(500).send({
+                    status: 500,
+                    message: 'Error interno del servidor',
+                });
+            }
+            return res.status(200).send({
+                status: 200,
+                message: 'Se ha actualizado exitosamente',
+            });
+        });
+    },
+
 };
 
 module.exports = AuthController;

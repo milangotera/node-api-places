@@ -26,4 +26,12 @@ router.post('/profile', authMiddleware.getToken, multipartMiddleware, function(r
     AuthController.upload(req, res);
 });
 
+router.put('/profile/:id/premium', authMiddleware.getToken, authMiddleware.getTokenAdmin, function(req, res) {
+    AuthController.addPremium(req, res);
+});
+
+router.delete('/profile/:id/premium', authMiddleware.getToken, authMiddleware.getTokenAdmin, function(req, res) {
+    AuthController.removePremium(req, res);
+});
+
 module.exports = router;
