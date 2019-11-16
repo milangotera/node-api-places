@@ -209,6 +209,77 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Datos de categoría",
+            "schema": {
+              "type": "object",
+              "required": [
+                "user_email",
+                "user_password",
+                "user_firstname",
+                "user_lastname"
+              ],
+              "properties": {
+                "user_email": {
+                  "type": "string"
+                },
+                "user_password": {
+                  "type": "string"
+                },
+                "user_firstname": {
+                  "type": "string"
+                },
+                "user_lastname": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categorys"
+        ],
+        "summary": "Agregar nueva categoría",
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Datos de la categoria",
+            "schema": {
+              "type": "object",
+              "required": [
+                "category_name",
+                "category_display"
+              ],
+              "properties": {
+                "category_name": {
+                  "type": "string"
+                },
+                "category_display": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "Datos recuperados exitosamente"
@@ -231,15 +302,6 @@
         ],
         "produces": [
           "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Id de la categoria",
-            "required": true,
-            "type": "integer"
-          }
         ],
         "responses": {
           "200": {
@@ -538,6 +600,78 @@
           },
           "403": {
             "description": "Error en envio de datos"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/auth/profile/{id}/premium": {
+      "put": {
+        "tags": [
+          "Places"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Activar premium de un usuario",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "401": {
+            "description": "No tienes acceso a la información"
+          },
+          "403": {
+            "description": "Error en envío de datos"
+          },
+          "404": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Places"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Desactivar premium de un usuario",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "401": {
+            "description": "No tienes acceso a la información"
+          },
+          "403": {
+            "description": "Error en envío de datos"
           },
           "404": {
             "description": "No existen los datos que buscas"
