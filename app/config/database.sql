@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 15-11-2019 a las 19:30:34
+-- Tiempo de generación: 16-11-2019 a las 00:32:47
 -- Versión del servidor: 5.7.24
 -- Versión de PHP: 7.2.19
 
@@ -126,6 +126,7 @@ CREATE TABLE `user` (
   `user_password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `user_avatar` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `user_premium` int(11) NOT NULL,
+  `user_role` int(11) NOT NULL DEFAULT '0',
   `user_status` int(11) NOT NULL,
   `user_token` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `user_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -136,8 +137,8 @@ CREATE TABLE `user` (
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_firstname`, `user_lastname`, `user_email`, `user_password`, `user_avatar`, `user_premium`, `user_status`, `user_token`, `user_created_at`, `user_updated_at`) VALUES
-(7, 'Thiago', 'Gotera', 'milangotera@gmail.com', 'roko2090', 'avatar/0.png', 0, 0, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3LCJ1c2VyX2ZpcnN0bmFtZSI6Ik1pbGFuIiwidXNlcl9sYXN0bmFtZSI6IkdvdGVyYSIsInVzZXJfZW1haWwiOiJtaWxhbmdvdGVyYUBnbWFpbC5jb20iLCJ1c2VyX2F2YXRhciI6bnVsbCwidXNlcl9wcmVtaXVtIjowLCJ1c2VyX3N0YXR1cyI6MCwiaWF0IjoxNTczODM3NjcwLCJleHAiOjE1NzM5MjQwNzB9.ExsLGdTD_s4aa1UQQPpAbbiJ98b_GjGwnul0R-ua3tE', '2019-11-12 21:00:34', '2019-11-15 14:18:06');
+INSERT INTO `user` (`user_id`, `user_firstname`, `user_lastname`, `user_email`, `user_password`, `user_avatar`, `user_premium`, `user_role`, `user_status`, `user_token`, `user_created_at`, `user_updated_at`) VALUES
+(7, 'Thiago', 'Gotera', 'milangotera@gmail.com', 'roko2090', 'avatar/7.png', 0, 1, 0, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3LCJ1c2VyX2ZpcnN0bmFtZSI6IlRoaWFnbyIsInVzZXJfbGFzdG5hbWUiOiJHb3RlcmEiLCJ1c2VyX2VtYWlsIjoibWlsYW5nb3RlcmFAZ21haWwuY29tIiwidXNlcl9hdmF0YXIiOiJhdmF0YXIvNy5wbmciLCJ1c2VyX3JvbGUiOjEsInVzZXJfcHJlbWl1bSI6MCwidXNlcl9zdGF0dXMiOjAsImlhdCI6MTU3Mzg2NDE0NiwiZXhwIjoxNTczOTUwNTQ2fQ.u9VdwetnoMatBVoPtwZe-s-pwAbQ2s4g5NhkWYake4w', '2019-11-12 21:00:34', '2019-11-15 19:29:06');
 
 -- --------------------------------------------------------
 
@@ -161,7 +162,7 @@ CREATE TABLE `zone` (
 --
 
 INSERT INTO `zone` (`zone_id`, `zone_name`, `zone_postcode`, `zone_location`, `zone_type`, `zone_parent`, `zone_created_at`, `zone_updated_at`) VALUES
-(1, 'Tacna', 23000, NULL, 1, NULL, '2019-11-12 22:12:51', '2019-11-15 11:09:08'),
+(1, 'Tacna', 23000, '0,0', 1, NULL, '2019-11-12 22:12:51', '2019-11-15 19:06:06'),
 (2, 'Jorge Basadre', 23000, '0,0', 1, NULL, '2019-11-15 11:59:15', '2019-11-15 11:59:15'),
 (3, 'Candarave', 23000, '0,0', 1, NULL, '2019-11-15 11:59:15', '2019-11-15 11:59:15'),
 (4, 'Tarata', 23000, '0,0', 1, NULL, '2019-11-15 11:59:15', '2019-11-15 11:59:15');
