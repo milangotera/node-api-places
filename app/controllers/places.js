@@ -4,6 +4,76 @@ var AppModel = require('../models/AppModel');
 
 const PlacesController = {
     
+    create: function(req, res) {
+
+        let errors = 0;
+        let errorData = {};
+
+        if(!req.body.place_name){
+            errorData.place_name = "El campo nombre es requerido";
+            errors++;
+        }
+        if(!req.body.place_description){
+            errorData.place_description = "El campo descripcion es requerido";
+            errors++;
+        }
+        if(!req.body.place_address){
+            errorData.place_address = "El campo direccion es requerido";
+            errors++;
+        }
+        if(!req.body.place_location){
+            errorData.place_location = "El campo localización es requerido";
+            errors++;
+        }
+        if(!req.body.user_id){
+            errorData.user_id = "El campo usuario es requerido";
+            errors++;
+        }
+        if(!req.body.zone_id){
+            errorData.zone_id = "El campo zona es requerido";
+            errors++;
+        }
+        if(!req.body.category_id){
+            errorData.category_id = "El campo categoria es requerido";
+            errors++;
+        }
+
+        if(errors){
+            return res.status(403).send({
+                status:403,
+                errors: errorData,
+                message: 'Error en envío de datos',
+            });
+        }
+
+        const placeData = {
+            place_image: 'place/0.png',
+            place_name: req.body.place_name,
+            place_description: req.body.place_description,
+            place_address: req.body.place_address,
+            place_location: req.body.place_location,
+            place_display: 1,
+            user_id: req.body.user_id,
+            zone_id: req.body.zone_id,
+            category_id: req.body.category_id
+        };
+
+        AppModel.insert('place', placeData, function(error, result) {
+            if(error){
+                return res.status(500).send({
+                    status: 500,
+                    message: 'Error interno del servidor',
+                });
+            }
+            if(result){
+                return res.status(201).send({
+                    status: 201,
+                    message: 'Se ha registrado exitosamente',
+                });
+            }
+        });
+    },
+
     list: function(req, res) {
         AppModel.select('view_places_list', null, function(error, result) {
             if(error){

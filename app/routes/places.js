@@ -8,6 +8,10 @@ router.get('/', function(req, res) {
     PlacesController.list(req, res);
 });
 
+router.post('/', authMiddleware.getToken, authMiddleware.getTokenPremium, function(req, res) {
+    PlacesController.create(req, res);
+});
+
 router.get('/:id', function(req, res) {
     PlacesController.show(req, res);
 });

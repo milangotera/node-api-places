@@ -61,6 +61,71 @@
             "description": "Error interno del servidor"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Places"
+        ],
+        "summary": "Registrar nueva plaza",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Datos de la plaza",
+            "schema": {
+              "type": "object",
+              "required": [
+                "place_name",
+                "place_description",
+                "place_address",
+                "place_location",
+                "user_id",
+                "zone_id",
+                "category_id"
+              ],
+              "properties": {
+                "place_name": {
+                  "type": "string"
+                },
+                "place_description": {
+                  "type": "string"
+                },
+                "place_address": {
+                  "type": "string"
+                },
+                "place_location": {
+                  "type": "string"
+                },
+                "user_id": {
+                  "type": "integer"
+                },
+                "zone_id": {
+                  "type": "integer"
+                },
+                "category_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Datos recuperados exitosamente"
+          },
+          "401": {
+            "description": "No tienes permiso de acceder"
+          },
+          "403": {
+            "description": "No existen los datos que buscas"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
       }
     },
     "/places/{id}": {
