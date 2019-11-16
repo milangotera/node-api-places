@@ -72,6 +72,26 @@ const AppModel = {
 
     },
 
+    delete: function(table, where, callback){
+        let sql_where       = ``;
+        let sql_where_total = 0;
+        if(where){
+            sql_where += ` WHERE`;
+            for (const prop in where) {
+                if(sql_where_total > 0){
+                    sql_where += ` AND`;
+                }
+                sql_where += ` ${prop}='${where[prop]}'`;
+                sql_where_total++;
+            }
+            sql_where += ` `;
+        }
+        let sql = `DELETE ${table} ${sql_where}`;
+        Mysql.query(sql, function( error, result){
+            callback(error, result);
+        });
+    },
+
 };
 
 module.exports = AppModel;
