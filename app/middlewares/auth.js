@@ -4,6 +4,7 @@ const jwt=require('jsonwebtoken');
 const AppModel = require('../models/AppModel');
 
 const authMiddleware = {
+
     getToken: function(req, res, next) {
         if(!req.headers.authorization) {
             return res.status(401).send({
@@ -39,6 +40,7 @@ const authMiddleware = {
             }
         });
     },
+
     getTokenAdmin: function(req, res, next) {
         if(req.token.user_role != 1) {
             return res.status(401).send({
@@ -48,6 +50,17 @@ const authMiddleware = {
         }
         next();
     },
+
+    getTokenPremium: function(req, res, next) {
+        if(req.token.user_premium != 1) {
+            return res.status(401).send({
+                status: 401,
+                message: "Sin permiso para consultar",
+            });
+        }
+        next();
+    },
+
     setToken: function(user) {
         const data = {
             user_id: user.user_id,
@@ -72,6 +85,7 @@ const authMiddleware = {
         });
         return token;
     }
+
 };
 
 module.exports = authMiddleware;
