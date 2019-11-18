@@ -3,12 +3,14 @@
 var router = require('express').Router();
 var PlacesController = require('../controllers/places');
 var authMiddleware = require('../middlewares/auth');
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
 
 router.get('/', function(req, res) {
     PlacesController.list(req, res);
 });
 
-router.post('/', authMiddleware.getToken, authMiddleware.getTokenPremium, function(req, res) {
+router.post('/', authMiddleware.getToken, authMiddleware.getTokenPremium, multipartMiddleware, function(req, res) {
     PlacesController.create(req, res);
 });
 

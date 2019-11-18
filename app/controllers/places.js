@@ -1,6 +1,8 @@
 'use strict';
 
 var AppModel = require('../models/AppModel');
+const HelperService = require('../helpers');
+const fs = require('fs');
 
 const PlacesController = {
     
@@ -8,6 +10,18 @@ const PlacesController = {
 
         let errors = 0;
         let errorData = {};
+        let place_image = null;
+        const place_photo = `${HelperService.randomString(30)}.png`;
+        const target_path = `./public/place/${place_photo}`;
+        
+        if(req.files){
+            if(req.files.place_image){
+                place_image = req.files.place_image;
+            }else{
+                errorData.place_image = "El campo imagen es requerido";
+                errors++;
+            }
+        }
 
         if(!req.body.place_name){
             errorData.place_name = "El campo nombre es requerido";
@@ -25,7 +39,7 @@ const PlacesController = {
             errorData.place_location = "El campo localización es requerido";
             errors++;
         }
-        if(!req.body.user_id){
+        if(!req.token.user_id){
             errorData.user_id = "El campo usuario es requerido";
             errors++;
         }
@@ -37,6 +51,26 @@ const PlacesController = {
             errorData.category_id = "El campo categoria es requerido";
             errors++;
         }
+        if(!errors){
+            if(place_image.type != 'image/jpeg' && place_image.type != 'image/png'){
+                errorData.place_image = "La imagen solo admite jpeg/png";
+                errors++;
+            }
+            if(place_image.size > 4000000){
+                errorData.place_image = "La imagen excede el limite permitido";
+                errors++;
+            }
+            if(!errors){
+                fs.rename(place_image.path, target_path, function(err) {
+                    fs.unlink(place_image.path, function() {
+                        if(err){
+                            errorData.place_image = "No se pudo cargar la imagen";
+                            errors++;
+                        }
+                    });
+                });
+            }
+        }
 
         if(errors){
             return res.status(403).send({
@@ -47,13 +81,13 @@ const PlacesController = {
         }
 
         const placeData = {
-            place_image: 'place/0.png',
+            place_image: place_photo,
             place_name: req.body.place_name,
             place_description: req.body.place_description,
             place_address: req.body.place_address,
             place_location: req.body.place_location,
             place_display: 1,
-            user_id: req.body.user_id,
+            user_id: req.token.user_id,
             zone_id: req.body.zone_id,
             category_id: req.body.category_id
         };
