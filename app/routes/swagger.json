@@ -69,9 +69,16 @@
         "summary": "Registrar nueva plaza",
         "description": "",
         "consumes": [
-          "application/json"
+          "multipart/form-data"
         ],
         "parameters": [
+          {
+            "in": "formData",
+            "name": "place_image",
+            "type": "file",
+            "required": true,
+            "description": "Imagen de la plaza"
+          },
           {
             "in": "body",
             "description": "Datos de la plaza",
@@ -319,6 +326,13 @@
         "summary": "Agregar nueva categoría",
         "description": "",
         "parameters": [
+          {
+            "in": "formData",
+            "name": "category_icon",
+            "type": "file",
+            "required": true,
+            "description": "Imagen de la categoría"
+          },
           {
             "in": "body",
             "description": "Datos de la categoria",
