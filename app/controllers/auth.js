@@ -220,7 +220,7 @@ const AuthController = {
                     message: 'La imagen solo admite jpeg/png',
                 });
             }
-            if(user_avatar.size > 60000){
+            if(user_avatar.size > 4000000){
                 return res.status(403).send({
                     status:403,
                     message: 'La imagen excede el limite permitido',
